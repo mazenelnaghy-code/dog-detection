@@ -1,0 +1,18 @@
+# Installed by deploy/setup_pi.sh (placeholders __ROOT__ / __USER__ are filled in).
+[Unit]
+Description=AI dog detection and ultrasonic repeller
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=__USER__
+SupplementaryGroups=gpio video
+WorkingDirectory=__ROOT__
+ExecStart=__ROOT__/.venv/bin/python -m dog_repeller --config config/local.yaml --no-window
+Restart=always
+RestartSec=5
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target

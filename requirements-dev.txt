@@ -1,0 +1,4 @@
+-r requirements.txt
+pytest>=8.0
+gpiozero>=2.0  # only for tests/test_gpio_mock.py (mock pins, no Pi needed)
+ruff>=0.6

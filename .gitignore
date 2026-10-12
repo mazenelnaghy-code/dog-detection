@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+build/
+dist/
+
+# Models, datasets and training output (downloaded / generated, not committed)
+*.pt
+*.onnx
+*_ncnn_model/
+datasets/
+runs/
+models/*
+!models/README.md
+
+# Runtime output
+logs/
+*.log
+
+# Original WhatsApp media (kept locally only)
+WhatsApp*
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Local tool settings
+.claude/
+
+# Per-device config created by deploy/setup_pi.sh (contains the dashboard token)
+config/local.yaml
+
+# hardware_check.py snapshot
+hardware_check.jpg
+
+# Private working notes (kept locally, never uploaded)
+_private/

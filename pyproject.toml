@@ -1,0 +1,52 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dog-repeller"
+version = "1.1.0"
+description = "AI-powered dog detection and ultrasonic repellent system for Raspberry Pi (YOLOv8n)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+authors = [{ name = "Mazen Elnaghy" }]
+dependencies = [
+    "numpy>=1.24",
+    "opencv-python>=4.8",
+    "PyYAML>=6.0",
+    "Flask>=3.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/mazenelnaghy-code/dog-detection"
+Documentation = "https://github.com/mazenelnaghy-code/dog-detection/blob/main/docs/GETTING_STARTED.md"
+Issues = "https://github.com/mazenelnaghy-code/dog-detection/issues"
+Changelog = "https://github.com/mazenelnaghy-code/dog-detection/blob/main/CHANGELOG.md"
+Portfolio = "https://mazenelnaghy-code.github.io/#/projects/dog-deterrent"
+
+[project.optional-dependencies]
+ml = ["ultralytics>=8.3.0"]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+dog-repeller = "dog_repeller.app:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src", "."]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py310"
+extend-exclude = ["notebooks"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM"]
+ignore = ["SIM108"]  # ternaries are not always clearer
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["E402"]
+"tools/fetch_commons.py" = ["E501"]  # copy-paste command examples in the docstring

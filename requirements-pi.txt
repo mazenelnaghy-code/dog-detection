@@ -1,0 +1,9 @@
+# Runtime dependencies for the Raspberry Pi (installed by deploy/setup_pi.sh).
+# picamera2, gpiozero and lgpio come from apt (python3-picamera2, python3-gpiozero, python3-lgpio)
+# and are visible because the venv is created with --system-site-packages.
+ultralytics>=8.3.0
+ncnn>=1.0.20240410
+opencv-python>=4.8
+numpy>=1.24
+PyYAML>=6.0
+Flask>=3.0

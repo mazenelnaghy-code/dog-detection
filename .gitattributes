@@ -1,0 +1,5 @@
+# Keep LF endings in the repo so shell scripts and service files work on the Raspberry Pi.
+* text=auto eol=lf
+*.jpg binary
+*.jpeg binary
+*.png binary

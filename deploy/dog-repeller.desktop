@@ -1,0 +1,8 @@
+# Installed into ~/.config/autostart by deploy/setup_pi.sh desktop
+[Desktop Entry]
+Type=Application
+Name=Dog Repeller
+Comment=AI dog detection and ultrasonic repeller (shown on the HDMI screen)
+Exec=bash -c "cd __ROOT__ && sleep 5 && .venv/bin/python -m dog_repeller --config config/local.yaml >> dog-repeller.log 2>&1"
+Terminal=false
+X-GNOME-Autostart-enabled=true

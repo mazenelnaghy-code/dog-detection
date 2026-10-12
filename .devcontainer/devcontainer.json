@@ -1,0 +1,13 @@
+{
+  "name": "AI Dog Repeller",
+  "image": "mcr.microsoft.com/devcontainers/python:3.12",
+  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y --no-install-recommends libgl1 libglib2.0-0 && pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu && pip install -r requirements-dev.txt && pip install --no-deps -e .",
+  "postAttachCommand": "echo 'Try it:  python -m dog_repeller --demo --no-window   then open the Ports tab -> 8000'",
+  "forwardPorts": [8000],
+  "portsAttributes": {
+    "8000": { "label": "Dog repeller dashboard", "onAutoForward": "openBrowser" }
+  },
+  "customizations": {
+    "vscode": { "extensions": ["ms-python.python"] }
+  }
+}

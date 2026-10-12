@@ -1,0 +1,12 @@
+.git
+.venv
+venv
+datasets
+runs
+models/*_ncnn_model
+*.pt
+*.onnx
+WhatsApp*
+.claude
+__pycache__
+.pytest_cache

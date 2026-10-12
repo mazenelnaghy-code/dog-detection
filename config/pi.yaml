@@ -1,0 +1,22 @@
+# Raspberry Pi with real hardware (Pi Camera + relay + buzzer + 7" HDMI screen).
+#   python -m dog_repeller --config config/pi.yaml
+base: default.yaml
+
+camera:
+  source: picamera
+
+model:
+  # NCNN is the fastest format on the Pi (deploy/setup_pi.sh creates it). Manually:
+  #   python training/export.py --weights yolo11n.pt --format ncnn --imgsz 640 --out models
+  # ~8-10 FPS on a Pi 5. On a Pi 4 use imgsz 416 (re-export with --imgsz 416).
+  path: models/yolo11n_ncnn_model
+  imgsz: 640
+
+hardware:
+  backend: gpio
+
+display:
+  fullscreen: true
+
+dashboard:
+  host: 0.0.0.0        # reachable from a phone on the same Wi-Fi: http://<pi-ip>:8000

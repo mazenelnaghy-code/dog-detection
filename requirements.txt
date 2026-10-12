@@ -1,0 +1,6 @@
+# Runtime dependencies for a PC (Windows / Linux / macOS) — simulation & development.
+ultralytics>=8.3.0
+opencv-python>=4.8
+numpy>=1.24
+PyYAML>=6.0
+Flask>=3.0

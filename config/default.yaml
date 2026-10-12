@@ -1,0 +1,78 @@
+# Default settings — run on a normal PC with simulated hardware.
+#   python -m dog_repeller --config config/default.yaml
+# Every key is optional; anything you leave out uses the built-in default.
+
+camera:
+  source: "0"          # the "switch": "0" = webcam, "picamera" = Pi camera, or a video file / URL
+  width: 640
+  height: 480
+  fps: 30              # on the Pi camera this also limits exposure -> less motion blur
+  loop: false          # replay a video file forever (handy for demos)
+  realtime: false      # true = play video files at real speed, like a live camera (best for
+                       # testing recorded videos: repeller timings are in real seconds)
+  rotate: 0            # 0 / 90 / 180 / 270 if the camera is mounted rotated
+
+model:
+  path: yolo11n.pt     # downloaded automatically on first run (COCO-pretrained, 80 classes)
+  imgsz: 640           # smaller (416/320) = faster, larger = sees smaller / farther dogs
+  conf: 0.25           # minimum confidence (multi-frame confirmation removes flicker)
+  iou: 0.5
+  device: cpu
+  class_name: dog      # class to look for (works with COCO and with our fine-tuned 1-class model)
+  compete: true        # cats / people compete with "dog" for each box -> fewer false alarms
+  # COCO-trained models often call Egyptian street dogs "cow", "bear", "sheep" or "horse".
+  # Counting these as dogs raised detection on 236 Egyptian street-dog photos from 72 % to 97 %.
+  # Remove "bear" if street cats trigger the system too often (it adds ~8 % cat false alarms).
+  # "cat" and "person" are never allowed here.
+  also_count: [bear, cow, sheep, horse, zebra, elephant, giraffe]
+  min_box_area: 0.002  # ignore boxes smaller than 0.2 % of the frame
+
+zone:
+  # Danger zone as fractions of the frame [x1, y1, x2, y2].
+  # A camera looking at the ground sees close dogs in the LOWER part of the image,
+  # so the default zone covers the lower-middle area.
+  rect: [0.2, 0.4, 0.8, 1.0]
+  rule: either         # zone | distance | either | both
+  focal_length_px: null  # set after running tools/calibrate_focal.py to enable distance
+  dog_height_m: 0.5
+  danger_distance_m: 3.0
+
+controller:
+  window_frames: 6     # look at the last 6 frames…
+  confirm_frames: 3    # …and require the dog in at least 3 of them (removes flicker)
+  burst_s: 5.0         # ultrasonic repeller ON time
+  cooldown_s: 3.0      # pause between bursts
+  max_bursts: 6        # after 6 bursts in a row…
+  lockout_s: 60.0      # …rest for 60 s
+  start_armed: true
+
+buzzer:
+  mode: detect         # detect = beep for any dog (like the original) | danger | off
+  pin: 27
+  active_high: true
+  beeps: 2
+  on_s: 0.15
+  off_s: 0.1
+  min_interval_s: 5.0
+
+repeller:
+  pin: 17
+  active_high: false   # most relay boards are active-LOW
+  watchdog_s: 5.0      # safety: force OFF if the program freezes for 5 s (0 = off)
+
+hardware:
+  backend: sim         # sim = print to console | gpio = real Raspberry Pi pins
+
+display:
+  window: true
+  fullscreen: false
+  title: Dog Repeller
+
+dashboard:
+  enabled: true
+  host: 127.0.0.1      # only this PC; use 0.0.0.0 to open it from a phone
+  port: 8000
+  token: ""
+  jpeg_quality: 70
+
+log_level: INFO

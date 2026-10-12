@@ -1,0 +1,41 @@
+name: arm64 (Raspberry Pi stack)
+
+# Runs the Raspberry Pi software stack on native ARM64 hardware (GitHub's arm runners):
+# install requirements-pi.txt, export YOLO11n to NCNN, score the sample photos and run the demo.
+# Python 3.11 = Raspberry Pi OS Bookworm, Python 3.13 = Raspberry Pi OS Trixie.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  pi-stack:
+    runs-on: ubuntu-24.04-arm
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: System libraries for OpenCV
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libgl1 libglib2.0-0
+      - name: Install the Raspberry Pi requirements
+        run: |
+          pip install -r requirements-pi.txt pytest
+          pip install --no-deps -e .
+          python -c "import platform, numpy, cv2, torch, ultralytics, ncnn; print(platform.machine(), 'numpy', numpy.__version__, 'cv2', cv2.__version__, 'torch', torch.__version__, 'ultralytics', ultralytics.__version__)"
+      - name: Export YOLO11n to NCNN (what deploy/setup_pi.sh does)
+        run: python training/export.py --weights yolo11n.pt --format ncnn --imgsz 640 --out models
+      - name: Score the sample photos with the NCNN model (speed on ARM64)
+        run: python tools/evaluate.py --dogs samples/dogs --no-dogs samples/no_dogs --model models/yolo11n_ncnn_model --imgsz 640
+      - name: Run the demo with the Pi model
+        run: |
+          python -m dog_repeller --demo --no-window --no-dashboard --set camera.loop=false \
+            --set model.path=models/yolo11n_ncnn_model --set model.imgsz=640 2>&1 | tee demo.log
+          grep -q "ULTRASONIC REPELLER ON" demo.log
+          grep -q "Repeller OFF" demo.log
+      - name: Unit tests on ARM64
+        run: python -m pytest -q
