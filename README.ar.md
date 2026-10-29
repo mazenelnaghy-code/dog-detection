@@ -196,7 +196,7 @@ python tools/evaluate.py --dogs my_site/dogs --no-dogs my_site/no_dogs --variant
 ## المطوّر
 
 يطوّره ويتابعه **Mazen Elnaghy**، طالب هندسة ذكاء اصطناعي في جامعة شرق بورسعيد الأهلية (بورسعيد، مصر).
-[Portfolio](https://mazenelnaghy-code.github.io/#/projects/dog-deterrent) · [CV](https://mazenelnaghy-code.github.io/assets/Mazen_Elnaghy_CV.pdf) · [LinkedIn](https://linkedin.com/in/mazen-elnaghy) · [GitHub](https://github.com/mazenelnaghy-code)
+[Portfolio](https://mazenelnaghy-code.github.io/#/projects/dog-deterrent) · [CV](https://mazenelnaghy-code.github.io/assets/Mazen_Elnaghy_CV.pdf) · [LinkedIn](https://linkedin.com/in/mazen-elnaghy) · [GitHub](https://github.com/mazenelnaghy-code) · [Upwork](https://www.upwork.com/freelancers/~01b6c711b0162ca691)
 
 ## الترخيص
 
